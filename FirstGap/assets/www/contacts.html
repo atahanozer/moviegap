@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contact Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        // find all contacts with 'Bob' in any name field
+        var options = new ContactFindOptions();
+    	options.filter="";
+        options.multiple=true;
+        var fields = ["phoneNumbers", "name"];
+        navigator.contacts.find(fields, onSuccess, onError, options);
+    }
+
+    // onSuccess: Get a snapshot of the current contacts
+    //
+    function onSuccess(contacts) {
+    var ul = document.getElementById("list"); 
+ alert(contacts[0].name.formatted);
+        
+        for(var index=0;index<contacts.length;index++){
+            var li2 = document.createElement('li');
+    li2.innerHTML = "test"; 
+ul.appendChild(li2);
+var name = contacts[index].name.formatted;
+if(contacts[index].phoneNumbers != null){
+var phoneNumber = contacts[index].phoneNumbers[0].value;
+var li = document.createElement('li');
+li.innerHTML = "<a href=\"tel://"+phoneNumber+"\">"+name+"</a>"; 
+ul.appendChild(li);
+}
+}
+    }
+
+    // onError: Failed to get the contacts
+    //
+    function onError(contactError) {
+        alert('onError!');
+    }
+
+    </script>
+  </head>
+  <body>
+    <h1>Contacts</h1> 
+    <ul id="list">
+</ul>
+  </body>
+</html>
